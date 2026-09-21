@@ -1,0 +1,17 @@
+{
+  "run_name": "local-python-model",
+  "task": {
+    "prompt": "Listen to the audio and identify the perceived gender of the main speaker's voice. Return exactly one lowercase label: male or female."
+  },
+  "backend": {
+    "type": "python",
+    "model": "replace-with-model-name",
+    "module_path": "examples/local_model_adapter.py",
+    "factory": "create_backend"
+  },
+  "runner": {
+    "workers": 1,
+    "retries": 1,
+    "timeout_seconds": 300
+  }
+}

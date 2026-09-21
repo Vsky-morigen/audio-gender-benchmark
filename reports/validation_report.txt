@@ -1,0 +1,9 @@
+BENCHMARK VALIDATION PASS
+audio_type: {'TTS': 50, 'real_human': 50}
+language: {'zh': 50, 'en': 50}
+gender: {'male': 50, 'female': 50}
+language x gender: {('zh', 'male'): 25, ('zh', 'female'): 25, ('en', 'male'): 25, ('en', 'female'): 25}
+length: {'short': 20, 'medium': 60, 'long': 20}
+scene: {'daily_chat': 26, 'news_sharing': 26, 'emotional_support': 24, 'task_planning': 24}
+unique_audio_hashes: 100
+duration_target_match: Counter({'yes': 72, 'no': 28})

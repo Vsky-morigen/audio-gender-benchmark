@@ -1,0 +1,16 @@
+{
+  "run_name": "local-command-model",
+  "task": {
+    "prompt": "Listen to the audio and identify the perceived gender of the main speaker's voice. Return exactly one lowercase label: male or female."
+  },
+  "backend": {
+    "type": "command",
+    "model": "replace-with-model-name",
+    "command": ["python", "path/to/infer.py", "--audio", "{audio_path}"]
+  },
+  "runner": {
+    "workers": 1,
+    "retries": 1,
+    "timeout_seconds": 300
+  }
+}

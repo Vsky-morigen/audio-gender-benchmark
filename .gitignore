@@ -1,0 +1,16 @@
+# Evaluation outputs and local secrets
+results/
+.env
+.env.*
+
+# Python and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
