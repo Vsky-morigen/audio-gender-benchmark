@@ -1,5 +1,7 @@
 # Evaluation outputs and local secrets
 results/
+.audio_cache/
+/audio/
 .env
 .env.*
 

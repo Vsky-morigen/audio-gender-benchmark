@@ -1,6 +1,7 @@
 {
   "run_name": "qwen3.8-omni-flash",
   "task": {
+    "name": "gender",
     "prompt": "Listen to the audio and identify the perceived gender of the main speaker's voice. Return exactly one lowercase label: male or female. Do not transcribe or explain."
   },
   "backend": {

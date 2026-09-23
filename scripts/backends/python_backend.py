@@ -32,6 +32,7 @@ class PythonBackend(InferenceBackend):
         if isinstance(value, str):
             return value
         if isinstance(value, dict):
-            prediction = value.get("prediction") or value.get("predicted_gender")
+            prediction = (value.get("prediction") or value.get("predicted_label")
+                          or value.get("answer") or value.get("predicted_gender"))
             return str(prediction) if prediction else json.dumps(value, ensure_ascii=False)
         raise TypeError("custom backend predict() must return str or dict")

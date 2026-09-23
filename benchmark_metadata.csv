@@ -1,101 +1,101 @@
-﻿id,audio_name,audio_path,audio_type,data_source,language,gender,length_category,scene,transcript,duration_seconds,compatible_emotions
-PLB_001,TTS_001.wav,audio/tts/TTS_001.wav,TTS,Sambert,zh,male,short,daily_chat,我今天出门时风特别大。,2.0875,angry|excited|panicked
-PLB_002,TTS_002.wav,audio/tts/TTS_002.wav,TTS,Sambert,zh,female,short,daily_chat,门外又传来了脚步声。,1.8375,angry|excited|panicked
-PLB_003,TTS_003.wav,audio/tts/TTS_003.wav,TTS,Sambert,zh,male,medium,daily_chat,阳台上的那些花忽然全都开了。,2.8125,sad|excited|panicked
-PLB_004,TTS_004.wav,audio/tts/TTS_004.wav,TTS,Sambert,zh,female,medium,daily_chat,电梯今天总是停在这一层。,2.2625,sad|angry|excited
-PLB_005,TTS_005.wav,audio/tts/TTS_005.wav,TTS,Sambert,zh,male,medium,daily_chat,窗边多了一把没见过的伞。,2.1,sad|excited|panicked
-PLB_006,TTS_006.wav,audio/tts/TTS_006.wav,TTS,Sambert,zh,female,medium,daily_chat,隔壁房间突然传来一阵掌声。,2.7,sad|angry|excited|panicked
-PLB_007,TTS_007.wav,audio/tts/TTS_007.wav,TTS,Sambert,zh,male,long,daily_chat,回到住处以后我发现桌面上的东西全换了位置。,4.1,sad|angry|excited|panicked
-PLB_008,TTS_008.wav,audio/tts/TTS_008.wav,TTS,Sambert,zh,male,short,news_sharing,名单提前公布了。,1.5375,sad|angry|excited|panicked
-PLB_009,TTS_009.wav,audio/tts/TTS_009.wav,TTS,Sambert,zh,male,medium,news_sharing,检测报告出现了新的数值。,2.25,sad|angry|excited|panicked
-PLB_010,TTS_010.wav,audio/tts/TTS_010.wav,TTS,Sambert,zh,female,medium,news_sharing,快递被送到了另一个地址。,1.975,sad|angry|panicked
-PLB_011,TTS_011.wav,audio/tts/TTS_011.wav,TTS,Sambert,zh,male,medium,news_sharing,之前取消的活动又恢复了。,2.2625,sad|angry|excited
-PLB_012,TTS_012.wav,audio/tts/TTS_012.wav,TTS,Sambert,zh,female,medium,news_sharing,账户里突然多了一笔退款。,2.1875,angry|excited|panicked
-PLB_013,TTS_013.wav,audio/tts/TTS_013.wav,TTS,Sambert,zh,female,long,news_sharing,负责审核的人通知说最终结果需要重新确认。,4.1125,sad|angry|excited|panicked
-PLB_014,TTS_014.wav,audio/tts/TTS_014.wav,TTS,Sambert,zh,female,short,emotional_support,我有话想告诉你。,1.525,sad|angry|excited|panicked
-PLB_015,TTS_015.wav,audio/tts/TTS_015.wav,TTS,Sambert,zh,male,medium,emotional_support,这件事我一直没有对别人说。,2.4,sad|angry|excited|panicked
-PLB_016,TTS_016.wav,audio/tts/TTS_016.wav,TTS,Sambert,zh,female,medium,emotional_support,最近总有些事情让我睡不着。,2.3625,sad|angry|excited|panicked
-PLB_017,TTS_017.wav,audio/tts/TTS_017.wav,TTS,Sambert,zh,female,medium,emotional_support,听完以后我不知道该怎么回应。,2.175,sad|angry|excited|panicked
-PLB_018,TTS_018.wav,audio/tts/TTS_018.wav,TTS,Sambert,zh,male,long,emotional_support,有个决定我考虑了很久现在终于可以说出来了。,3.9625,sad|angry|excited|panicked
-PLB_019,TTS_019.wav,audio/tts/TTS_019.wav,TTS,Sambert,zh,female,long,emotional_support,刚才发生的事情让我到现在还不知道该怎么办。,3.575,sad|angry|panicked
-PLB_020,TTS_020.wav,audio/tts/TTS_020.wav,TTS,Sambert,zh,male,short,task_planning,时间需要重排。,1.5125,sad|angry|excited|panicked
-PLB_021,TTS_021.wav,audio/tts/TTS_021.wav,TTS,Sambert,zh,male,medium,task_planning,场地要在中午以前确认好。,2.375,angry|excited|panicked
-PLB_022,TTS_022.wav,audio/tts/TTS_022.wav,TTS,Sambert,zh,female,medium,task_planning,这一部分可能需要换个方法。,2.075,sad|angry|excited|panicked
-PLB_023,TTS_023.wav,audio/tts/TTS_023.wav,TTS,Sambert,zh,male,medium,task_planning,材料必须在会议开始前提交。,2.6,angry|excited|panicked
-PLB_024,TTS_024.wav,audio/tts/TTS_024.wav,TTS,Sambert,zh,female,medium,task_planning,对方临时增加了两项要求。,2.2625,sad|angry|excited|panicked
-PLB_025,TTS_025.wav,audio/tts/TTS_025.wav,TTS,Sambert,zh,male,long,task_planning,原定下午进行的讨论刚刚通知要提前两个小时。,3.9,sad|angry|excited|panicked
-PLB_026,TTS_026.wav,audio/tts/TTS_026.wav,TTS,Sambert,en,male,short,daily_chat,The hallway lights went out.,1.925,sad|angry|excited|panicked
-PLB_027,TTS_027.wav,audio/tts/TTS_027.wav,TTS,Sambert,en,male,medium,daily_chat,A bird landed beside the open window.,3.0375,sad|excited|panicked
-PLB_028,TTS_028.wav,audio/tts/TTS_028.wav,TTS,Sambert,en,female,medium,daily_chat,My usual seat was already taken today.,2.9125,sad|angry|excited
-PLB_029,TTS_029.wav,audio/tts/TTS_029.wav,TTS,Sambert,en,male,medium,daily_chat,The room feels much colder than yesterday.,2.7625,sad|angry|excited|panicked
-PLB_030,TTS_030.wav,audio/tts/TTS_030.wav,TTS,Sambert,en,female,medium,daily_chat,The coffee machine started making a strange sound today.,3.4875,sad|angry|excited|panicked
-PLB_031,TTS_031.wav,audio/tts/TTS_031.wav,TTS,Sambert,en,male,long,daily_chat,While walking back I noticed every shop on the corner had closed early.,4.65,sad|angry|panicked
-PLB_032,TTS_032.wav,audio/tts/TTS_032.wav,TTS,Sambert,en,female,short,news_sharing,The building passed inspection today.,2.025,sad|angry|excited
-PLB_033,TTS_033.wav,audio/tts/TTS_033.wav,TTS,Sambert,en,female,short,news_sharing,The reservation is officially confirmed.,2.5625,sad|excited|panicked
-PLB_034,TTS_034.wav,audio/tts/TTS_034.wav,TTS,Sambert,en,male,medium,news_sharing,The train service added an extra stop this morning.,3.575,sad|angry|excited|panicked
-PLB_035,TTS_035.wav,audio/tts/TTS_035.wav,TTS,Sambert,en,female,medium,news_sharing,The library extended its weekend hours for the summer.,3.225,sad|angry|excited|panicked
-PLB_036,TTS_036.wav,audio/tts/TTS_036.wav,TTS,Sambert,en,male,medium,news_sharing,The community center received funding for a new studio.,3.6125,sad|angry|excited|panicked
-PLB_037,TTS_037.wav,audio/tts/TTS_037.wav,TTS,Sambert,en,female,medium,news_sharing,A lost key was found inside the storage room.,3.5125,sad|angry|excited|panicked
-PLB_038,TTS_038.wav,audio/tts/TTS_038.wav,TTS,Sambert,en,female,long,news_sharing,The organizers announced that the event would continue at a different nearby location.,5.0,sad|angry|excited
-PLB_039,TTS_039.wav,audio/tts/TTS_039.wav,TTS,Sambert,en,female,short,emotional_support,I need your honest opinion.,2.275,sad|excited|panicked
-PLB_040,TTS_040.wav,audio/tts/TTS_040.wav,TTS,Sambert,en,male,medium,emotional_support,I keep wondering whether I expected too much from this.,4.125,sad|angry|panicked
-PLB_041,TTS_041.wav,audio/tts/TTS_041.wav,TTS,Sambert,en,female,medium,emotional_support,Something from yesterday keeps returning to my mind.,3.5875,sad|angry|excited|panicked
-PLB_042,TTS_042.wav,audio/tts/TTS_042.wav,TTS,Sambert,en,male,medium,emotional_support,Every choice feels heavier than it did yesterday.,3.425,sad|angry|excited|panicked
-PLB_043,TTS_043.wav,audio/tts/TTS_043.wav,TTS,Sambert,en,male,long,emotional_support,Being surrounded by familiar voices still left me feeling completely out of place tonight.,6.2875,sad|angry|panicked
-PLB_044,TTS_044.wav,audio/tts/TTS_044.wav,TTS,Sambert,en,female,long,emotional_support,A familiar place suddenly feels completely different and I cannot explain why it affects me.,5.9625,sad|angry|excited|panicked
-PLB_045,TTS_045.wav,audio/tts/TTS_045.wav,TTS,Sambert,en,male,short,task_planning,The test failed once more.,2.125,sad|angry|excited|panicked
-PLB_046,TTS_046.wav,audio/tts/TTS_046.wav,TTS,Sambert,en,female,medium,task_planning,Please check the equipment before everyone arrives.,3.3875,sad|angry|excited|panicked
-PLB_047,TTS_047.wav,audio/tts/TTS_047.wav,TTS,Sambert,en,male,medium,task_planning,A shared calendar may prevent another conflict.,3.2875,sad|angry|excited|panicked
-PLB_048,TTS_048.wav,audio/tts/TTS_048.wav,TTS,Sambert,en,female,medium,task_planning,Several files are missing from the project folder.,3.2625,sad|angry|excited|panicked
-PLB_049,TTS_049.wav,audio/tts/TTS_049.wav,TTS,Sambert,en,male,medium,task_planning,Our schedule leaves only one afternoon for testing.,3.6375,sad|angry|excited|panicked
-PLB_050,TTS_050.wav,audio/tts/TTS_050.wav,TTS,Sambert,en,female,long,task_planning,The delivery team needs a new route because the main entrance will remain closed tomorrow.,5.4625,sad|angry|excited|panicked
-PLB_051,PLB_051.wav,audio/real/PLB_051.wav,real_human,MagicData-RAMC,zh,male,short,task_planning,别人的安全你要考虑到,2.522,angry|excited|panicked
-PLB_052,PLB_052.wav,audio/real/PLB_052.wav,real_human,MagicData-RAMC,zh,male,short,daily_chat,你去西餐厅吃过饭吗？,2.04,sad|excited
-PLB_053,PLB_053.wav,audio/real/PLB_053.wav,real_human,MagicData-RAMC,zh,male,medium,task_planning,一啊，一定要坚持不懈的做任何一件事,3.365,angry|excited|panicked
-PLB_054,PLB_054.wav,audio/real/PLB_054.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,面食的喜欢吃喜欢吃那些米饭啥的,3.326,sad|excited
-PLB_055,PLB_055.wav,audio/real/PLB_055.wav,real_human,MagicData-RAMC,zh,male,medium,task_planning,必要的时候我们要握紧法律的武器，对吧,3.357,angry|excited|panicked
-PLB_056,PLB_056.wav,audio/real/PLB_056.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,煮着吃还是怎么吃，都很好吃。,3.104,sad|excited
-PLB_057,PLB_057.wav,audio/real/PLB_057.wav,real_human,MagicData-RAMC,zh,male,medium,news_sharing,后然后他就被封禁了一次，后来改过来了,3.287,sad|angry|excited|panicked
-PLB_058,PLB_058.wav,audio/real/PLB_058.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,你目前了解了哪些书法家呢,3.219,sad|excited
-PLB_059,PLB_059.wav,audio/real/PLB_059.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,是的，交朋友是交五湖四海的,3.481,sad|excited
-PLB_060,PLB_060.wav,audio/real/PLB_060.wav,real_human,MagicData-RAMC,zh,male,medium,emotional_support,业余的话冬泳我感觉危险性还是，挺大的,3.665,sad|angry|panicked
-PLB_061,PLB_061.wav,audio/real/PLB_061.wav,real_human,MagicData-RAMC,zh,male,long,news_sharing,该太平间就报告经常有异常事情发生，第一次的异常活动,5.033,sad|angry|excited|panicked
-PLB_062,PLB_062.wav,audio/real/PLB_062.wav,real_human,MagicData-RAMC,zh,male,long,emotional_support,有一些很稍稍微有一些劳动的时候就会难受，受不了之类的,6.304,sad|angry|panicked
-PLB_063,PLB_063.wav,audio/real/PLB_063.wav,real_human,MagicData-RAMC,zh,female,short,emotional_support,一高中压力就大了。,2.064,sad|angry|panicked
-PLB_064,PLB_064.wav,audio/real/PLB_064.wav,real_human,MagicData-RAMC,zh,female,short,emotional_support,就是，感觉很难搞懂,2.211,sad|angry|panicked
-PLB_065,PLB_065.wav,audio/real/PLB_065.wav,real_human,MagicData-RAMC,zh,female,short,daily_chat,熬夜熬的白天就睡觉了,2.045,sad|excited
-PLB_066,PLB_066.wav,audio/real/PLB_066.wav,real_human,MagicData-RAMC,zh,female,medium,daily_chat,在生活中对我们也会有很多的帮助,3.393,sad|excited
-PLB_067,PLB_067.wav,audio/real/PLB_067.wav,real_human,MagicData-RAMC,zh,female,medium,task_planning,其实一本儿书，你研究透了，你成绩也会很好,3.326,angry|excited|panicked
-PLB_068,PLB_068.wav,audio/real/PLB_068.wav,real_human,MagicData-RAMC,zh,female,medium,task_planning,嗯以后我们学习高数要好好听,3.193,angry|excited|panicked
-PLB_069,PLB_069.wav,audio/real/PLB_069.wav,real_human,MagicData-RAMC,zh,female,medium,news_sharing,然后他们的内心就发生了可大的变化,4.189,sad|angry|excited|panicked
-PLB_070,PLB_070.wav,audio/real/PLB_070.wav,real_human,MagicData-RAMC,zh,female,medium,news_sharing,我感觉我刚二十岁，我就上了十六年学了嘛。,3.568,sad|angry|excited|panicked
-PLB_071,PLB_071.wav,audio/real/PLB_071.wav,real_human,MagicData-RAMC,zh,female,medium,news_sharing,百度的话我是听说过，也没有全面的了解过,3.511,sad|angry|excited|panicked
-PLB_072,PLB_072.wav,audio/real/PLB_072.wav,real_human,MagicData-RAMC,zh,female,medium,daily_chat,就每年去游玩的人就非常的多,3.404,sad|excited
-PLB_073,PLB_073.wav,audio/real/PLB_073.wav,real_human,MagicData-RAMC,zh,female,long,emotional_support,是不是就是当你去看他的时候拜访他的时候，他都很开心,5.023,sad|angry|panicked
-PLB_074,PLB_074.wav,audio/real/PLB_074.wav,real_human,MagicData-RAMC,zh,female,long,news_sharing,这部影片啊，它获得了那个十八届上海国际电影节的奖项,5.08,sad|angry|excited|panicked
-PLB_075,PLB_075.wav,audio/real/PLB_075.wav,real_human,MagicData-RAMC,zh,female,long,news_sharing,因为因为那时候已经发生了好多好多的少女就离奇失踪了,5.072,sad|angry|excited|panicked
-PLB_076,PLB_076.wav,audio/real/PLB_076.wav,real_human,SLURP,en,male,short,task_planning,Delete my next calendar event.,2.624,angry|excited|panicked
-PLB_077,PLB_077.wav,audio/real/PLB_077.wav,real_human,SLURP,en,male,short,task_planning,schedule a meeting with my boss,2.496,angry|excited|panicked
-PLB_078,PLB_078.wav,audio/real/PLB_078.wav,real_human,AMI Meeting Corpus,en,male,short,news_sharing,It's a new uh commercial logo,2.52,sad|angry|excited|panicked
-PLB_079,PLB_079.wav,audio/real/PLB_079.wav,real_human,SLURP,en,male,medium,task_planning,Set calendar reminder for noon titled lunch meeting.,4.736,angry|excited|panicked
-PLB_080,PLB_080.wav,audio/real/PLB_080.wav,real_human,SLURP,en,male,medium,daily_chat,Load my playlist titled Country Favourites and play it.,3.7115,sad|excited
-PLB_081,PLB_081.wav,audio/real/PLB_081.wav,real_human,AMI Meeting Corpus,en,male,medium,emotional_support,Yeah if they have time It's hard finding people,3.09,sad|angry|panicked
-PLB_082,PLB_082.wav,audio/real/PLB_082.wav,real_human,AMI Meeting Corpus,en,male,medium,emotional_support,Mm-hmm Um sorry I I didn't understand,4.8,sad|angry|panicked
-PLB_083,PLB_083.wav,audio/real/PLB_083.wav,real_human,AMI Meeting Corpus,en,male,medium,news_sharing,Uh sorry got a message from Microsoft,4.69,sad|angry|excited|panicked
-PLB_084,PLB_084.wav,audio/real/PLB_084.wav,real_human,SLURP,en,male,medium,daily_chat,who sings the song that I'm listening to right now.,4.095438,sad|excited
-PLB_085,PLB_085.wav,audio/real/PLB_085.wav,real_human,AMI Meeting Corpus,en,male,medium,news_sharing,I think the scroll-button is something also uh new,4.03,sad|angry|excited|panicked
-PLB_086,PLB_086.wav,audio/real/PLB_086.wav,real_human,AMI Meeting Corpus,en,male,long,task_planning,I suppose the easiest way of doing it is to put some notes down which I will do,5.31,angry|excited|panicked
-PLB_087,PLB_087.wav,audio/real/PLB_087.wav,real_human,AMI Meeting Corpus,en,male,long,news_sharing,So those are the three um the three new requirements that that I was told,6.15,sad|angry|excited|panicked
-PLB_088,PLB_088.wav,audio/real/PLB_088.wav,real_human,AMI Meeting Corpus,en,male,long,emotional_support,It's almost like Houston we have a product here Problem is obviously gonna be cost,6.41,sad|angry|panicked
-PLB_089,PLB_089.wav,audio/real/PLB_089.wav,real_human,SLURP,en,female,short,daily_chat,How is rice prepared?,2.431687,sad|excited
-PLB_090,PLB_090.wav,audio/real/PLB_090.wav,real_human,SLURP,en,female,short,task_planning,Do I have any new emails?,2.577437,angry|excited|panicked
-PLB_091,PLB_091.wav,audio/real/PLB_091.wav,real_human,AMI Meeting Corpus,en,female,medium,emotional_support,Yeah I'm happy enough with that I don't feel strongly about it,3.09,sad|angry|panicked
-PLB_092,PLB_092.wav,audio/real/PLB_092.wav,real_human,AMI Meeting Corpus,en,female,medium,emotional_support,Mm no that's difficult Because it the transcription window does cross-highlighting,4.5,sad|angry|panicked
-PLB_093,PLB_093.wav,audio/real/PLB_093.wav,real_human,AMI Meeting Corpus,en,female,medium,news_sharing,Because apparently from your survey people like colours no,4.16,sad|angry|excited|panicked
-PLB_094,PLB_094.wav,audio/real/PLB_094.wav,real_human,AMI Meeting Corpus,en,female,medium,emotional_support,it's gonna be pretty hard to put two people inside that room,3.12,sad|angry|panicked
-PLB_095,PLB_095.wav,audio/real/PLB_095.wav,real_human,SLURP,en,female,medium,daily_chat,Please turn up the light a little.,4.109938,sad|excited
-PLB_096,PLB_096.wav,audio/real/PLB_096.wav,real_human,SLURP,en,female,medium,daily_chat,Remember that I do not like this music.,3.761687,sad|excited
-PLB_097,PLB_097.wav,audio/real/PLB_097.wav,real_human,SLURP,en,female,medium,task_planning,Remind me to take my medicine at 9 a.m.,3.712,angry|excited|panicked
-PLB_098,PLB_098.wav,audio/real/PLB_098.wav,real_human,SLURP,en,female,medium,task_planning,Check if I have set any alarm for tomorrow.,3.648,angry|excited|panicked
-PLB_099,PLB_099.wav,audio/real/PLB_099.wav,real_human,AMI Meeting Corpus,en,female,long,news_sharing,it's now I guess that we're supposed to start at fifteen thirty five so we've got until four,6.44,sad|angry|excited|panicked
-PLB_100,PLB_100.wav,audio/real/PLB_100.wav,real_human,AMI Meeting Corpus,en,female,long,emotional_support,Um they're hard to see and okay they're labelled but the labels don't necessarily tell you too much,6.46,sad|angry|panicked
+﻿id,audio_name,audio_path,audio_type,data_source,language,gender,length_category,scene,transcript,duration_seconds,compatible_emotions,sha256
+PLB_001,TTS_001.wav,audio/tts/TTS_001.wav,TTS,Sambert,zh,male,short,daily_chat,我今天出门时风特别大。,2.0875,angry|excited|panicked,c8b70ec3175c9f9b97dff7755f754145f6a84cb5b0b99d3f206099fe37a9dd8c
+PLB_002,TTS_002.wav,audio/tts/TTS_002.wav,TTS,Sambert,zh,female,short,daily_chat,门外又传来了脚步声。,1.8375,angry|excited|panicked,733710c9787e6111845cdabec3fb76d3477fd8ef3487279fa399895116af4f05
+PLB_003,TTS_003.wav,audio/tts/TTS_003.wav,TTS,Sambert,zh,male,medium,daily_chat,阳台上的那些花忽然全都开了。,2.8125,sad|excited|panicked,3bf984a5817e2c0c0c73bb11d41fee332429a23391c627477884fb57082867c4
+PLB_004,TTS_004.wav,audio/tts/TTS_004.wav,TTS,Sambert,zh,female,medium,daily_chat,电梯今天总是停在这一层。,2.2625,sad|angry|excited,a48b555ac16a6218ba62fb27173f07f1c55f7aabc458976e54036c3ebb5d00da
+PLB_005,TTS_005.wav,audio/tts/TTS_005.wav,TTS,Sambert,zh,male,medium,daily_chat,窗边多了一把没见过的伞。,2.1,sad|excited|panicked,ffba610ed9bc47d1e74169bfc824b17ab5c6f639b7e22a02ee719c4340e89da4
+PLB_006,TTS_006.wav,audio/tts/TTS_006.wav,TTS,Sambert,zh,female,medium,daily_chat,隔壁房间突然传来一阵掌声。,2.7,sad|angry|excited|panicked,6cf0d872629b7bbe9b37354d51484fc37896a3d0e7795d068967d7216ed5f158
+PLB_007,TTS_007.wav,audio/tts/TTS_007.wav,TTS,Sambert,zh,male,long,daily_chat,回到住处以后我发现桌面上的东西全换了位置。,4.1,sad|angry|excited|panicked,d60aa53e8aba0ce37edb345b3b55b0f312ae0bbec8bcb73cec2520016f27f1b2
+PLB_008,TTS_008.wav,audio/tts/TTS_008.wav,TTS,Sambert,zh,male,short,news_sharing,名单提前公布了。,1.5375,sad|angry|excited|panicked,4b0688bdf3a729dff74faec05998a98a8843b57a89abb77338c6d5fb3fc8f037
+PLB_009,TTS_009.wav,audio/tts/TTS_009.wav,TTS,Sambert,zh,male,medium,news_sharing,检测报告出现了新的数值。,2.25,sad|angry|excited|panicked,dba60c24ca4027fe2372b04a9a0e5189bb75537a936d7cc639f47221f1709672
+PLB_010,TTS_010.wav,audio/tts/TTS_010.wav,TTS,Sambert,zh,female,medium,news_sharing,快递被送到了另一个地址。,1.975,sad|angry|panicked,12774447459757461f6d70aa2fb954a691f630f017ab7dc8fcb71b5564fb2a32
+PLB_011,TTS_011.wav,audio/tts/TTS_011.wav,TTS,Sambert,zh,male,medium,news_sharing,之前取消的活动又恢复了。,2.2625,sad|angry|excited,1897f38fd9bd42b0772abbcf5f5c0dd86e41ff77f6a6f9279ddf4a7d1915c615
+PLB_012,TTS_012.wav,audio/tts/TTS_012.wav,TTS,Sambert,zh,female,medium,news_sharing,账户里突然多了一笔退款。,2.1875,angry|excited|panicked,7dbeb7437b5753eb2a20ad8e6e643294ed3000471436ffe135949aea5d89f642
+PLB_013,TTS_013.wav,audio/tts/TTS_013.wav,TTS,Sambert,zh,female,long,news_sharing,负责审核的人通知说最终结果需要重新确认。,4.1125,sad|angry|excited|panicked,b481e319e6b62f4854d2bf3fba6632499e82f6eec1af3fa1c01881a9197cc706
+PLB_014,TTS_014.wav,audio/tts/TTS_014.wav,TTS,Sambert,zh,female,short,emotional_support,我有话想告诉你。,1.525,sad|angry|excited|panicked,e242b73b8d6ecfe805aa20964eefc0a7de589cc855fa0bc29f8971fef593f460
+PLB_015,TTS_015.wav,audio/tts/TTS_015.wav,TTS,Sambert,zh,male,medium,emotional_support,这件事我一直没有对别人说。,2.4,sad|angry|excited|panicked,8abea3242f8e52003f39f6664adde64f6fefe47e88e953bed02e9133d0e978ed
+PLB_016,TTS_016.wav,audio/tts/TTS_016.wav,TTS,Sambert,zh,female,medium,emotional_support,最近总有些事情让我睡不着。,2.3625,sad|angry|excited|panicked,7c9adb3b658fad2b7c16090bd4c4ee2870f74a95a6cbe04f71343601d01a1caa
+PLB_017,TTS_017.wav,audio/tts/TTS_017.wav,TTS,Sambert,zh,female,medium,emotional_support,听完以后我不知道该怎么回应。,2.175,sad|angry|excited|panicked,a166bc3ff419b85b04c6886652d61b25166e609823c2b0a21ebb2feb7da0f618
+PLB_018,TTS_018.wav,audio/tts/TTS_018.wav,TTS,Sambert,zh,male,long,emotional_support,有个决定我考虑了很久现在终于可以说出来了。,3.9625,sad|angry|excited|panicked,e230ee0e286a92082e67264ea73a11cd7ea861313eff36668aa4cf0b86636534
+PLB_019,TTS_019.wav,audio/tts/TTS_019.wav,TTS,Sambert,zh,female,long,emotional_support,刚才发生的事情让我到现在还不知道该怎么办。,3.575,sad|angry|panicked,999b5d3c75e6fe303612b8b59a88f77b48233c5c4c01df91e721b0acf7fb3517
+PLB_020,TTS_020.wav,audio/tts/TTS_020.wav,TTS,Sambert,zh,male,short,task_planning,时间需要重排。,1.5125,sad|angry|excited|panicked,d3e0bbcf74dc3dde3857b9a1f05109785395d3fe185f1296fc875b7ab685be5f
+PLB_021,TTS_021.wav,audio/tts/TTS_021.wav,TTS,Sambert,zh,male,medium,task_planning,场地要在中午以前确认好。,2.375,angry|excited|panicked,43d2afa9e46547842ef35569f0668a760ffbfe0fac71fe335e868819647f3854
+PLB_022,TTS_022.wav,audio/tts/TTS_022.wav,TTS,Sambert,zh,female,medium,task_planning,这一部分可能需要换个方法。,2.075,sad|angry|excited|panicked,569e09fc5da8dfcfd30e6af93b64972e9c5ea0fb09df4340cf88f949f22132d6
+PLB_023,TTS_023.wav,audio/tts/TTS_023.wav,TTS,Sambert,zh,male,medium,task_planning,材料必须在会议开始前提交。,2.6,angry|excited|panicked,8375ad454152f387d100c7fc6f220b679c9f5a155a9667651527aced7ae71652
+PLB_024,TTS_024.wav,audio/tts/TTS_024.wav,TTS,Sambert,zh,female,medium,task_planning,对方临时增加了两项要求。,2.2625,sad|angry|excited|panicked,ce83ac251567d97013a17fc856163d3bbd1dc31d9b50ac55351b1005e726d2a4
+PLB_025,TTS_025.wav,audio/tts/TTS_025.wav,TTS,Sambert,zh,male,long,task_planning,原定下午进行的讨论刚刚通知要提前两个小时。,3.9,sad|angry|excited|panicked,cf670b503b89591d472f7cf2b628dcb1e590a887ddd8263cf617fa7ad299a997
+PLB_026,TTS_026.wav,audio/tts/TTS_026.wav,TTS,Sambert,en,male,short,daily_chat,The hallway lights went out.,1.925,sad|angry|excited|panicked,1476de929e3ebcfe0011c3ed26095787b9ad941925a5d6d5147135aba94d762f
+PLB_027,TTS_027.wav,audio/tts/TTS_027.wav,TTS,Sambert,en,male,medium,daily_chat,A bird landed beside the open window.,3.0375,sad|excited|panicked,9d0679d755fa548f215aa7374d2e6b6e065fdcedd527c24937142a4388e2fa98
+PLB_028,TTS_028.wav,audio/tts/TTS_028.wav,TTS,Sambert,en,female,medium,daily_chat,My usual seat was already taken today.,2.9125,sad|angry|excited,9243f7b65d4a1a0ab64450af75cdf6cfad8d3c1a35d9a984295e9e3295f8d835
+PLB_029,TTS_029.wav,audio/tts/TTS_029.wav,TTS,Sambert,en,male,medium,daily_chat,The room feels much colder than yesterday.,2.7625,sad|angry|excited|panicked,8f78d9294786daeabd5137041970b1234cab827fc214cb9f0729e44e0287d042
+PLB_030,TTS_030.wav,audio/tts/TTS_030.wav,TTS,Sambert,en,female,medium,daily_chat,The coffee machine started making a strange sound today.,3.4875,sad|angry|excited|panicked,2938435ae00a60fae0c8ba777a2cd767ac89d0d8ede2f540ff241a13ee4f7128
+PLB_031,TTS_031.wav,audio/tts/TTS_031.wav,TTS,Sambert,en,male,long,daily_chat,While walking back I noticed every shop on the corner had closed early.,4.65,sad|angry|panicked,b81db922713715473dd508e9129c961bdd974346b03580568e8c2fb3889e09d5
+PLB_032,TTS_032.wav,audio/tts/TTS_032.wav,TTS,Sambert,en,female,short,news_sharing,The building passed inspection today.,2.025,sad|angry|excited,e8f9c4dad0ef994ac9511f81708cc101d3cd8b9989472816d0e46200667445c3
+PLB_033,TTS_033.wav,audio/tts/TTS_033.wav,TTS,Sambert,en,female,short,news_sharing,The reservation is officially confirmed.,2.5625,sad|excited|panicked,a7721fde90a3bbe1c49e06dcf05f2eaf4ddbdec14951230b7266bcf126bfa49e
+PLB_034,TTS_034.wav,audio/tts/TTS_034.wav,TTS,Sambert,en,male,medium,news_sharing,The train service added an extra stop this morning.,3.575,sad|angry|excited|panicked,3ab9d1bcc7a899ae8b4d097e79daa9126bbe986c96618d00f05304e0675a0668
+PLB_035,TTS_035.wav,audio/tts/TTS_035.wav,TTS,Sambert,en,female,medium,news_sharing,The library extended its weekend hours for the summer.,3.225,sad|angry|excited|panicked,6b9d16d3b045422b56b76a724afa4fa644dacd8e9726042b03f3d7506ba5ecff
+PLB_036,TTS_036.wav,audio/tts/TTS_036.wav,TTS,Sambert,en,male,medium,news_sharing,The community center received funding for a new studio.,3.6125,sad|angry|excited|panicked,5f678b2094c85c7e777cb2c8f3fa90af401dd2240457bc3f9a55a2dc0704a4e7
+PLB_037,TTS_037.wav,audio/tts/TTS_037.wav,TTS,Sambert,en,female,medium,news_sharing,A lost key was found inside the storage room.,3.5125,sad|angry|excited|panicked,17bcb2bf679ce3ecac910db08e4b2bceb9df1eb0214ce7cefa15587aa3473e60
+PLB_038,TTS_038.wav,audio/tts/TTS_038.wav,TTS,Sambert,en,female,long,news_sharing,The organizers announced that the event would continue at a different nearby location.,5.0,sad|angry|excited,c032459e02794f224c047fa47050ebe82738ebc9b1cde8ed37838a77a31c1fb0
+PLB_039,TTS_039.wav,audio/tts/TTS_039.wav,TTS,Sambert,en,female,short,emotional_support,I need your honest opinion.,2.275,sad|excited|panicked,49282098676c708cdb80874612c31d3eaf4e1ce5a159d8952ec8936c5befc382
+PLB_040,TTS_040.wav,audio/tts/TTS_040.wav,TTS,Sambert,en,male,medium,emotional_support,I keep wondering whether I expected too much from this.,4.125,sad|angry|panicked,6643aeed2f619e601f39976adb00d6a40dcc0869d03b6c11bd128a0c9c538946
+PLB_041,TTS_041.wav,audio/tts/TTS_041.wav,TTS,Sambert,en,female,medium,emotional_support,Something from yesterday keeps returning to my mind.,3.5875,sad|angry|excited|panicked,0985da88e14b8b520559fdee9da132d9f55604a3319ea0754fd7c16561549211
+PLB_042,TTS_042.wav,audio/tts/TTS_042.wav,TTS,Sambert,en,male,medium,emotional_support,Every choice feels heavier than it did yesterday.,3.425,sad|angry|excited|panicked,7580690a1e227e9c73d4f14f1b4c1c9e454d6ca9dc36ec5115d4eaaf1975ac63
+PLB_043,TTS_043.wav,audio/tts/TTS_043.wav,TTS,Sambert,en,male,long,emotional_support,Being surrounded by familiar voices still left me feeling completely out of place tonight.,6.2875,sad|angry|panicked,aea66946d18b932140a970b97c736bb7842c4ac3d44a72d08966e9e20e8cc7f1
+PLB_044,TTS_044.wav,audio/tts/TTS_044.wav,TTS,Sambert,en,female,long,emotional_support,A familiar place suddenly feels completely different and I cannot explain why it affects me.,5.9625,sad|angry|excited|panicked,e05447c7046b9c8128330c1c65152e301200a91843b882b0521da552c7d84997
+PLB_045,TTS_045.wav,audio/tts/TTS_045.wav,TTS,Sambert,en,male,short,task_planning,The test failed once more.,2.125,sad|angry|excited|panicked,919fb3041ce09691c332fea5bcb65faacd2d59d1c91fe01ceab6bae7a031cff1
+PLB_046,TTS_046.wav,audio/tts/TTS_046.wav,TTS,Sambert,en,female,medium,task_planning,Please check the equipment before everyone arrives.,3.3875,sad|angry|excited|panicked,f80b775eaa896e433dffacffee721176d2c6b050fdfef2c29dedfd48744d5352
+PLB_047,TTS_047.wav,audio/tts/TTS_047.wav,TTS,Sambert,en,male,medium,task_planning,A shared calendar may prevent another conflict.,3.2875,sad|angry|excited|panicked,e59ae232dd1cda28513508d7f913d8e78522c3405ade6ea62ed4ed30508e0c1c
+PLB_048,TTS_048.wav,audio/tts/TTS_048.wav,TTS,Sambert,en,female,medium,task_planning,Several files are missing from the project folder.,3.2625,sad|angry|excited|panicked,5fb06b195df96e2d954465c41a792fb797bc598c6f84fe4a1e518974e38e9558
+PLB_049,TTS_049.wav,audio/tts/TTS_049.wav,TTS,Sambert,en,male,medium,task_planning,Our schedule leaves only one afternoon for testing.,3.6375,sad|angry|excited|panicked,0dd33450907fa85c7f153a715c38493d113366838c697a7714722a12793b0b3e
+PLB_050,TTS_050.wav,audio/tts/TTS_050.wav,TTS,Sambert,en,female,long,task_planning,The delivery team needs a new route because the main entrance will remain closed tomorrow.,5.4625,sad|angry|excited|panicked,8fabd5e89b852d2d91b5990e141fc40a7777974f6073ff7e2480f38f0e302a5a
+PLB_051,PLB_051.wav,audio/real/PLB_051.wav,real_human,MagicData-RAMC,zh,male,short,task_planning,别人的安全你要考虑到,2.522,angry|excited|panicked,702e0f8fb08a4ac244adf01f67be40ae5601297f3b31abbd701e97de3bd97e86
+PLB_052,PLB_052.wav,audio/real/PLB_052.wav,real_human,MagicData-RAMC,zh,male,short,daily_chat,你去西餐厅吃过饭吗？,2.04,sad|excited,34ed9a5dbd2b226b39a3c96a257fcf25bd1e9d074cd8550d896bc87ec2b5c697
+PLB_053,PLB_053.wav,audio/real/PLB_053.wav,real_human,MagicData-RAMC,zh,male,medium,task_planning,一啊，一定要坚持不懈的做任何一件事,3.365,angry|excited|panicked,e0ff2dae23b4fd70a8b22aac337c825461ed4ea6055d892483e2328ac338fe4c
+PLB_054,PLB_054.wav,audio/real/PLB_054.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,面食的喜欢吃喜欢吃那些米饭啥的,3.326,sad|excited,810b201d0f6a870ad8bca0de1961b83de3efa0cabd56843de55940acd95e5fa0
+PLB_055,PLB_055.wav,audio/real/PLB_055.wav,real_human,MagicData-RAMC,zh,male,medium,task_planning,必要的时候我们要握紧法律的武器，对吧,3.357,angry|excited|panicked,ad83eb109d876d2510f80e7ad3419236974b409b47901fd8ecd2d918ea671470
+PLB_056,PLB_056.wav,audio/real/PLB_056.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,煮着吃还是怎么吃，都很好吃。,3.104,sad|excited,1605b0ec8f27d62f935a6496ab633f61112837958fdeb2b7fb896ec84a8ebee1
+PLB_057,PLB_057.wav,audio/real/PLB_057.wav,real_human,MagicData-RAMC,zh,male,medium,news_sharing,后然后他就被封禁了一次，后来改过来了,3.287,sad|angry|excited|panicked,2ef394f877ea55af2ca40bb14eeae4ccd1ff86996c8fbd187cf4b67f1ba86d48
+PLB_058,PLB_058.wav,audio/real/PLB_058.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,你目前了解了哪些书法家呢,3.219,sad|excited,f8f8611931cab675ee97f61f1310a4e6d0921944c5eacfe48db985ebf448af00
+PLB_059,PLB_059.wav,audio/real/PLB_059.wav,real_human,MagicData-RAMC,zh,male,medium,daily_chat,是的，交朋友是交五湖四海的,3.481,sad|excited,2713359b0bfe9825cbad15988d5cf6bd920b5747d52252c1ac8cb6d398195968
+PLB_060,PLB_060.wav,audio/real/PLB_060.wav,real_human,MagicData-RAMC,zh,male,medium,emotional_support,业余的话冬泳我感觉危险性还是，挺大的,3.665,sad|angry|panicked,e5ccdc06b9ab63ba89c2353c0a27afc52beed066dca9023ca15cf475c41a1d34
+PLB_061,PLB_061.wav,audio/real/PLB_061.wav,real_human,MagicData-RAMC,zh,male,long,news_sharing,该太平间就报告经常有异常事情发生，第一次的异常活动,5.033,sad|angry|excited|panicked,4be808749f73e71435895d1d1d09552b4527a5e752d40f8a9346861023b0d4d1
+PLB_062,PLB_062.wav,audio/real/PLB_062.wav,real_human,MagicData-RAMC,zh,male,long,emotional_support,有一些很稍稍微有一些劳动的时候就会难受，受不了之类的,6.304,sad|angry|panicked,341ee682d6e91b4289276d22bef7c1d045f1b11e3e2debf0330540fefc55d79b
+PLB_063,PLB_063.wav,audio/real/PLB_063.wav,real_human,MagicData-RAMC,zh,female,short,emotional_support,一高中压力就大了。,2.064,sad|angry|panicked,9f43cc79d4c753365641f392a21116477e986e2c0cd37fbba4ed24aadb675cd1
+PLB_064,PLB_064.wav,audio/real/PLB_064.wav,real_human,MagicData-RAMC,zh,female,short,emotional_support,就是，感觉很难搞懂,2.211,sad|angry|panicked,b87f4634f0fb24691394cf4846d749dbf197ca87a2d6c6fd37d5a5ad01120f28
+PLB_065,PLB_065.wav,audio/real/PLB_065.wav,real_human,MagicData-RAMC,zh,female,short,daily_chat,熬夜熬的白天就睡觉了,2.045,sad|excited,670f32637279796585de8a60f950fe86a21e55e84ae6ff9192698b5299e301ac
+PLB_066,PLB_066.wav,audio/real/PLB_066.wav,real_human,MagicData-RAMC,zh,female,medium,daily_chat,在生活中对我们也会有很多的帮助,3.393,sad|excited,d4d363e05264e6c4056c91e9d10090e6225453754be85d37984fd7aa32ff9360
+PLB_067,PLB_067.wav,audio/real/PLB_067.wav,real_human,MagicData-RAMC,zh,female,medium,task_planning,其实一本儿书，你研究透了，你成绩也会很好,3.326,angry|excited|panicked,7b0c1f3cae37a4e94e06e6d1e6e2cc338cb5916db15272773e6bd4aa42e735e7
+PLB_068,PLB_068.wav,audio/real/PLB_068.wav,real_human,MagicData-RAMC,zh,female,medium,task_planning,嗯以后我们学习高数要好好听,3.193,angry|excited|panicked,e0ff8f8eb81f5f1f0cc1387b494da85cb3aad8cf8e2e982bf0bb4b007c4b3a66
+PLB_069,PLB_069.wav,audio/real/PLB_069.wav,real_human,MagicData-RAMC,zh,female,medium,news_sharing,然后他们的内心就发生了可大的变化,4.189,sad|angry|excited|panicked,d345110bcdba1f9adc70e6f40bf17e43abf212f2e26bc0ac52d4dba94a6a412a
+PLB_070,PLB_070.wav,audio/real/PLB_070.wav,real_human,MagicData-RAMC,zh,female,medium,news_sharing,我感觉我刚二十岁，我就上了十六年学了嘛。,3.568,sad|angry|excited|panicked,ab852ae3ca896b835085fe952bedd82b956f409c9a9e5d4fd8db222fae2c0b59
+PLB_071,PLB_071.wav,audio/real/PLB_071.wav,real_human,MagicData-RAMC,zh,female,medium,news_sharing,百度的话我是听说过，也没有全面的了解过,3.511,sad|angry|excited|panicked,fd9280bc9ace56c5ec37f23c49a296b202e7d05a2887912534bfab98c742fcba
+PLB_072,PLB_072.wav,audio/real/PLB_072.wav,real_human,MagicData-RAMC,zh,female,medium,daily_chat,就每年去游玩的人就非常的多,3.404,sad|excited,93aa98d2c9720f4449187baa6ac062203c3d7ba1e5ead4c367e96bc6ed9d6308
+PLB_073,PLB_073.wav,audio/real/PLB_073.wav,real_human,MagicData-RAMC,zh,female,long,emotional_support,是不是就是当你去看他的时候拜访他的时候，他都很开心,5.023,sad|angry|panicked,64f694f6dd45c90c855dfef04ec4a5333044cf3c0a219d33dc935f167e0a3c45
+PLB_074,PLB_074.wav,audio/real/PLB_074.wav,real_human,MagicData-RAMC,zh,female,long,news_sharing,这部影片啊，它获得了那个十八届上海国际电影节的奖项,5.08,sad|angry|excited|panicked,5e4905279d34ce9e0505573ce2cd380e5aea5a0046ce0f82ab2aeefedd29b229
+PLB_075,PLB_075.wav,audio/real/PLB_075.wav,real_human,MagicData-RAMC,zh,female,long,news_sharing,因为因为那时候已经发生了好多好多的少女就离奇失踪了,5.072,sad|angry|excited|panicked,1cfe666c1432f1d62c63f73321db233085bfb1001cd975814c31d87ead028d35
+PLB_076,PLB_076.wav,audio/real/PLB_076.wav,real_human,SLURP,en,male,short,task_planning,Delete my next calendar event.,2.624,angry|excited|panicked,2f417d742f3c01ca5181f16bd3cd2e2fb6413f56450c8655c37a07e5652fb147
+PLB_077,PLB_077.wav,audio/real/PLB_077.wav,real_human,SLURP,en,male,short,task_planning,schedule a meeting with my boss,2.496,angry|excited|panicked,0717c3797737f974381a96dc68f6eaab8e99239690ea8eb4dbe6f3116aaa4f4f
+PLB_078,PLB_078.wav,audio/real/PLB_078.wav,real_human,AMI Meeting Corpus,en,male,short,news_sharing,It's a new uh commercial logo,2.52,sad|angry|excited|panicked,043bb6b0950900f4574a4d63fd8e32fe1a07dbacf8ccad8878c3c402a94dbf8b
+PLB_079,PLB_079.wav,audio/real/PLB_079.wav,real_human,SLURP,en,male,medium,task_planning,Set calendar reminder for noon titled lunch meeting.,4.736,angry|excited|panicked,7ddc4dd3e8dc80e6ed35870d4f0716cf372f060fb072f47c1998401cbaccb179
+PLB_080,PLB_080.wav,audio/real/PLB_080.wav,real_human,SLURP,en,male,medium,daily_chat,Load my playlist titled Country Favourites and play it.,3.7115,sad|excited,dea02c760e175f78bd112fd04c82a5a62f095b9dfd219a2ba3dc6150fbe25070
+PLB_081,PLB_081.wav,audio/real/PLB_081.wav,real_human,AMI Meeting Corpus,en,male,medium,emotional_support,Yeah if they have time It's hard finding people,3.09,sad|angry|panicked,89d301fac4e1e474c67b223826174aceae5dda28d4c6bde329b37a4096174051
+PLB_082,PLB_082.wav,audio/real/PLB_082.wav,real_human,AMI Meeting Corpus,en,male,medium,emotional_support,Mm-hmm Um sorry I I didn't understand,4.8,sad|angry|panicked,ea16178c1dfed3552f0bfa84c1bb77a097d2c9c3987bf43f39fd936229caf5b0
+PLB_083,PLB_083.wav,audio/real/PLB_083.wav,real_human,AMI Meeting Corpus,en,male,medium,news_sharing,Uh sorry got a message from Microsoft,4.69,sad|angry|excited|panicked,75b663b5d1dc885b35826d6265cbbc9b3b1e0430f5c3c4d896d386dafd3ccfa6
+PLB_084,PLB_084.wav,audio/real/PLB_084.wav,real_human,SLURP,en,male,medium,daily_chat,who sings the song that I'm listening to right now.,4.095438,sad|excited,6b5b7b0761977d9e4f18474905bfcb59d0adcecdf5228de4d3a63b7cd6cc9341
+PLB_085,PLB_085.wav,audio/real/PLB_085.wav,real_human,AMI Meeting Corpus,en,male,medium,news_sharing,I think the scroll-button is something also uh new,4.03,sad|angry|excited|panicked,0020b7070a14949f57d7d7e23910fe3fa01c1cbd86afc69077ee148740bb7cb7
+PLB_086,PLB_086.wav,audio/real/PLB_086.wav,real_human,AMI Meeting Corpus,en,male,long,task_planning,I suppose the easiest way of doing it is to put some notes down which I will do,5.31,angry|excited|panicked,becd7158fae7d3a0c619710fdf9aa6ea06143df9b937507d58da63a22d9b2553
+PLB_087,PLB_087.wav,audio/real/PLB_087.wav,real_human,AMI Meeting Corpus,en,male,long,news_sharing,So those are the three um the three new requirements that that I was told,6.15,sad|angry|excited|panicked,617cd5d78d5bea59f77fad6d0c287a9ef3febe23d4a4c86c35e9178c24fb6916
+PLB_088,PLB_088.wav,audio/real/PLB_088.wav,real_human,AMI Meeting Corpus,en,male,long,emotional_support,It's almost like Houston we have a product here Problem is obviously gonna be cost,6.41,sad|angry|panicked,d8bcad41420b0ee2a4a5cf9b7a83802263e5f51c33349056332a17fb00170841
+PLB_089,PLB_089.wav,audio/real/PLB_089.wav,real_human,SLURP,en,female,short,daily_chat,How is rice prepared?,2.431687,sad|excited,8961013b59a3ec9e4b7a7db3ade42b394feb20f01c1fd0d363eb45b921ae362e
+PLB_090,PLB_090.wav,audio/real/PLB_090.wav,real_human,SLURP,en,female,short,task_planning,Do I have any new emails?,2.577437,angry|excited|panicked,0fe658b88e1042b9c206613fdf4bde0818d58062ae6256667c5648094c21b1e1
+PLB_091,PLB_091.wav,audio/real/PLB_091.wav,real_human,AMI Meeting Corpus,en,female,medium,emotional_support,Yeah I'm happy enough with that I don't feel strongly about it,3.09,sad|angry|panicked,601073055816c29cd6bfa5495f76216a39b5f26b933d035c2efa4c2d1fdf96d2
+PLB_092,PLB_092.wav,audio/real/PLB_092.wav,real_human,AMI Meeting Corpus,en,female,medium,emotional_support,Mm no that's difficult Because it the transcription window does cross-highlighting,4.5,sad|angry|panicked,014fe22358d6e9bfea9e124a30b35432810efc891bb3e3810bf2adce904580df
+PLB_093,PLB_093.wav,audio/real/PLB_093.wav,real_human,AMI Meeting Corpus,en,female,medium,news_sharing,Because apparently from your survey people like colours no,4.16,sad|angry|excited|panicked,afb9a51ef32f79b45c718c37d86a9cf0b869d896a937fb15fd62f276a650729b
+PLB_094,PLB_094.wav,audio/real/PLB_094.wav,real_human,AMI Meeting Corpus,en,female,medium,emotional_support,it's gonna be pretty hard to put two people inside that room,3.12,sad|angry|panicked,4cca0851a44c88185066dd7c629e7ffd15f7f3da18c28b4d544ab13a3dad2fe2
+PLB_095,PLB_095.wav,audio/real/PLB_095.wav,real_human,SLURP,en,female,medium,daily_chat,Please turn up the light a little.,4.109938,sad|excited,fa9424565d391ae81a9b6256bfea056e00534d900a02de3650700c6648723696
+PLB_096,PLB_096.wav,audio/real/PLB_096.wav,real_human,SLURP,en,female,medium,daily_chat,Remember that I do not like this music.,3.761687,sad|excited,06f15839bdbf76203d8ef3cf0931177c81dd9bb80bce50f48c1ae1dfc950a1d7
+PLB_097,PLB_097.wav,audio/real/PLB_097.wav,real_human,SLURP,en,female,medium,task_planning,Remind me to take my medicine at 9 a.m.,3.712,angry|excited|panicked,211857a30bd62d6a2e79c8879fd82cce9a440c8b2f22c11f1e4fd0cbca3a3f75
+PLB_098,PLB_098.wav,audio/real/PLB_098.wav,real_human,SLURP,en,female,medium,task_planning,Check if I have set any alarm for tomorrow.,3.648,angry|excited|panicked,cce51cac7a3f3e3a494f632abca1335e39ff85384d396f1f53279c0d8a5c9cee
+PLB_099,PLB_099.wav,audio/real/PLB_099.wav,real_human,AMI Meeting Corpus,en,female,long,news_sharing,it's now I guess that we're supposed to start at fifteen thirty five so we've got until four,6.44,sad|angry|excited|panicked,1173054f5ca11ce4e3989a3c968e85695bd94b423b4c06fbe9397ac8b275f5f9
+PLB_100,PLB_100.wav,audio/real/PLB_100.wav,real_human,AMI Meeting Corpus,en,female,long,emotional_support,Um they're hard to see and okay they're labelled but the labels don't necessarily tell you too much,6.46,sad|angry|panicked,8b2811855fddf28615f46253956dd00bcae76365e79c59b0b48b49b5898bd068

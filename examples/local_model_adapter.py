@@ -9,7 +9,8 @@ class LocalModelAdapter:
         self.config = config
 
     def predict(self, audio_path: str, prompt: str, item: dict[str, str]) -> str:
-        # Run local inference here. Return "male" or "female".
+        # Run local inference here. Return male/female for the gender task,
+        # or exactly A/B/C/D for the main-language task.
         raise NotImplementedError("Implement local model inference in examples/local_model_adapter.py")
 
 

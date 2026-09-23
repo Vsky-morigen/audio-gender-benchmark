@@ -1,0 +1,15 @@
+{
+  "run_name": "qwen3.8-omni-flash",
+  "task": {
+    "name": "main_language",
+    "prompt": "Listen to the spoken question in the audio and choose exactly one answer from the text options below. The audio contains the question; the options are supplied as text. Return only A, B, C, or D, with no explanation.\n{options}"
+  },
+  "backend": {
+    "type": "responses_api",
+    "model": "qwen3.8-omni-flash",
+    "api_key_env": "DASHSCOPE_API_KEY",
+    "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "base_url_env": "DASHSCOPE_BASE_URL"
+  },
+  "runner": {"workers": 4, "retries": 3, "timeout_seconds": 120}
+}

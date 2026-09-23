@@ -1,0 +1,13 @@
+{
+  "run_name": "local-command-main-language",
+  "task": {
+    "name": "main_language",
+    "prompt": "Listen to the question in the audio. Choose one of these text options and return only A, B, C, or D.\n{options}"
+  },
+  "backend": {
+    "type": "command",
+    "model": "replace-with-model-name",
+    "command": ["python", "path/to/infer.py", "--audio", "{audio_path}", "--prompt", "{prompt}"]
+  },
+  "runner": {"workers": 1, "retries": 1, "timeout_seconds": 300}
+}

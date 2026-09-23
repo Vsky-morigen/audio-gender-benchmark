@@ -1,0 +1,9 @@
+{
+  "run_name": "local-python-main-language",
+  "task": {
+    "name": "main_language",
+    "prompt": "Listen to the question in the audio. Choose one of these text options and return only A, B, C, or D.\n{options}"
+  },
+  "backend": {"type": "python", "model": "replace-with-model-name", "module_path": "examples/local_model_adapter.py"},
+  "runner": {"workers": 1, "retries": 1, "timeout_seconds": 300}
+}

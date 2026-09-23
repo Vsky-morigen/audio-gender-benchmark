@@ -1,97 +1,90 @@
 #!/usr/bin/env python3
-"""Validate the packaged 100-item benchmark."""
-
+"""Check the packaged 200 audio files and both gold manifests."""
 from __future__ import annotations
 
-import csv
 import hashlib
+import math
 import re
+import struct
 import sys
 import wave
+import zipfile
 from collections import Counter
 from pathlib import Path
 
+from evaluate_gender import MANIFESTS, read_rows
+from audio_store import resolve_audio
+
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "benchmark_metadata.csv"
-TARGET_SOURCE = {"TTS": 50, "real_human": 50}
-TARGET_LANGUAGE = {"zh": 50, "en": 50}
-TARGET_GENDER = {"male": 50, "female": 50}
-TARGET_CROSS = {("zh", "male"): 25, ("zh", "female"): 25, ("en", "male"): 25, ("en", "female"): 25}
-TARGET_LENGTH = {"short": 20, "medium": 60, "long": 20}
-TARGET_SCENE = {"daily_chat": 26, "news_sharing": 26, "emotional_support": 24, "task_planning": 24}
-TEXT_RANGES = {"zh": {"short": (6, 10), "medium": (11, 18), "long": (19, 26)}, "en": {"short": (4, 6), "medium": (7, 12), "long": (13, 18)}}
-
-
-def count_text(language: str, text: str) -> int:
-    return len(re.findall(r"[\u4e00-\u9fff]", text)) if language == "zh" else len(re.findall(r"[A-Za-z]+(?:['’][A-Za-z]+)?", text))
 
 
 def main() -> int:
-    with MANIFEST.open(encoding="utf-8-sig", newline="") as f:
-        rows = list(csv.DictReader(f))
     errors = []
-    if len(rows) != 100:
-        errors.append(f"expected 100 rows, found {len(rows)}")
-    expected_ids = [f"PLB_{i:03d}" for i in range(1, 101)]
-    if [r["id"] for r in rows] != expected_ids:
-        errors.append("IDs must be exactly PLB_001..PLB_100 in order")
-    checks = [
-        (Counter(r["audio_type"] for r in rows), TARGET_SOURCE, "audio_type"),
-        (Counter(r["language"] for r in rows), TARGET_LANGUAGE, "language"),
-        (Counter(r["gender"] for r in rows), TARGET_GENDER, "gender"),
-        (Counter((r["language"], r["gender"]) for r in rows), TARGET_CROSS, "language x gender"),
-        (Counter(r["length_category"] for r in rows), TARGET_LENGTH, "length"),
-        (Counter(r["scene"] for r in rows), TARGET_SCENE, "scene"),
-    ]
-    for actual, target, name in checks:
-        if dict(actual) != target:
-            errors.append(f"{name} mismatch: {dict(actual)}")
-    hashes, texts = [], []
-    for row in rows:
-        path = (ROOT / row["audio_path"]).resolve()
-        try:
-            path.relative_to(ROOT.resolve())
-        except ValueError:
-            errors.append(f"{row['id']}: audio path escapes benchmark root")
-            continue
-        if not path.exists():
-            errors.append(f"{row['id']}: missing {row['audio_path']}")
-            continue
-        with wave.open(str(path), "rb") as w:
-            duration = w.getnframes() / w.getframerate()
-            rate, channels = w.getframerate(), w.getnchannels()
-        digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        if abs(duration - float(row["duration_seconds"])) > 0.001:
-            errors.append(f"{row['id']}: duration mismatch")
-        if rate != 16000 or channels != 1:
-            errors.append(f"{row['id']}: expected 16 kHz mono WAV, got {rate} Hz/{channels} channels")
-        actual_count = count_text(row["language"], row["transcript"])
-        lo, hi = TEXT_RANGES[row["language"]][row["length_category"]]
-        if not lo <= actual_count <= hi:
-            errors.append(f"{row['id']}: text length outside category")
-        hashes.append(digest)
-        texts.append(re.sub(r"[^\w\u4e00-\u9fff]+", "", row["transcript"].lower()))
-    if len(set(hashes)) != 100:
-        errors.append(f"expected 100 unique audio hashes, found {len(set(hashes))}")
-    if len(set(texts)) != 100:
-        errors.append(f"expected 100 unique normalized transcripts, found {len(set(texts))}")
+    hashes = []
+    all_ids = []
+    for task, manifest in MANIFESTS.items():
+        rows = read_rows(manifest)
+        if len(rows) != 100:
+            errors.append(f'{task}: expected 100 rows, found {len(rows)}')
+        if len({r['id'] for r in rows}) != len(rows):
+            errors.append(f'{task}: duplicate IDs')
+        if Counter(r['language'] for r in rows) != {'zh': 50, 'en': 50}:
+            errors.append(f'{task}: language quota mismatch')
+        types = Counter(r['audio_type'] for r in rows)
+        expected = {'TTS': 50, 'real_human': 50} if task == 'gender' else {'TTS': 50, 'human': 50}
+        if types != expected:
+            errors.append(f'{task}: audio type quota mismatch: {types}')
+        if task == 'gender' and Counter(r['gender'] for r in rows) != {'male': 50, 'female': 50}:
+            errors.append('gender: gold label quota mismatch')
+        all_ids.extend(r['id'] for r in rows)
+        questions = set()
+        for row in rows:
+            item = row['id']
+            try:
+                audio = resolve_audio(row, task)
+            except (FileNotFoundError, ValueError, OSError, zipfile.BadZipFile) as exc:
+                errors.append(f'{item}: {exc}')
+                continue
+            try:
+                with wave.open(str(audio), 'rb') as wav:
+                    rate, channels, width = wav.getframerate(), wav.getnchannels(), wav.getsampwidth()
+                    frames = wav.getnframes()
+                    duration = frames / rate
+                    if task == 'main_language' and row['audio_type'] == 'TTS':
+                        pcm = wav.readframes(frames)
+                        samples = struct.unpack('<' + 'h' * frames, pcm)
+                        rms = math.sqrt(sum(x*x for x in samples) / frames) / 32768
+                        if rms <= 0.003:
+                            errors.append(f'{item}: near-silent TTS')
+                if (rate, channels, width) != (16000, 1, 2):
+                    errors.append(f'{item}: expected 16 kHz mono PCM16, got {rate}/{channels}/{width}')
+                if abs(duration - float(row['duration_seconds'])) > 0.002:
+                    errors.append(f'{item}: duration mismatch')
+            except (wave.Error, ValueError, ZeroDivisionError) as exc:
+                errors.append(f'{item}: invalid WAV: {exc}')
+                continue
+            digest = hashlib.sha256(audio.read_bytes()).hexdigest()
+            hashes.append(digest)
+            if digest != row['sha256']:
+                errors.append(f'{item}: SHA-256 mismatch')
+            if task == 'main_language':
+                answer = row['answer']
+                options = [row[f'option_{letter}'] for letter in 'ABCD']
+                if answer not in set('ABCD') or len(set(options)) != 4 or row['answer_text'] != row.get(f'option_{answer}'):
+                    errors.append(f'{item}: invalid single-choice answer')
+                norm = re.sub(r'\W+', '', row['question'].casefold())
+                if norm in questions:
+                    errors.append(f'{item}: duplicate question')
+                questions.add(norm)
+    if len(set(all_ids)) != 200:
+        errors.append(f'IDs collide across tasks: {len(set(all_ids))} distinct')
+    if len(set(hashes)) != 200:
+        errors.append(f'audio hashes collide: {len(set(hashes))} distinct')
+    print(f"PACKAGE VALIDATION {'PASS' if not errors else 'FAIL'}: {len(all_ids)} rows, {len(set(hashes))} unique WAVs")
+    for error in errors:
+        print('-', error)
+    return 0 if not errors else 1
 
-    print("BENCHMARK VALIDATION", "PASS" if not errors else "FAIL")
-    for actual, _, name in checks:
-        print(f"{name}: {dict(actual)}")
-    print(f"unique_audio_hashes: {len(set(hashes))}")
-    duration_match = Counter()
-    duration_ranges = {"short": (2.0, 3.0), "medium": (3.0, 5.0), "long": (5.0, 7.0)}
-    for row in rows:
-        lo, hi = duration_ranges[row["length_category"]]
-        duration_match["yes" if lo <= float(row["duration_seconds"]) <= hi else "no"] += 1
-    print(f"duration_target_match: {duration_match}")
-    if errors:
-        for error in errors:
-            print("-", error)
-        return 1
-    return 0
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate gender predictions for Paralinguistic Gender Benchmark v1."""
-
+"""Score a completed or partial gender/MCQ prediction file."""
 from __future__ import annotations
 
 import argparse
@@ -9,83 +8,102 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+MANIFESTS = {'gender': ROOT / 'benchmark_metadata.csv', 'main_language': ROOT / 'data/main_language.csv'}
+LABELS = {'gender': ('male', 'female'), 'main_language': ('A', 'B', 'C', 'D')}
 
-def metrics(rows: list[dict[str, str]]) -> dict[str, object]:
-    labels = ("male", "female")
-    correct = sum(r["gender"] == r["predicted_gender"] for r in rows)
-    recalls, f1s, per_class = [], [], {}
+
+def read_rows(path: Path) -> list[dict[str, str]]:
+    with path.open(encoding='utf-8-sig', newline='') as f:
+        return list(csv.DictReader(f))
+
+
+def classification_metrics(rows: list[dict[str, str]], labels: tuple[str, ...]) -> dict:
+    n = len(rows)
+    per_class = {}
     for label in labels:
-        tp = sum(r["gender"] == label and r["predicted_gender"] == label for r in rows)
-        fp = sum(r["gender"] != label and r["predicted_gender"] == label for r in rows)
-        fn = sum(r["gender"] == label and r["predicted_gender"] != label for r in rows)
+        tp = sum(x['gold'] == label and x['prediction'] == label for x in rows)
+        fp = sum(x['gold'] != label and x['prediction'] == label for x in rows)
+        fn = sum(x['gold'] == label and x['prediction'] != label for x in rows)
         precision = tp / (tp + fp) if tp + fp else 0.0
         recall = tp / (tp + fn) if tp + fn else 0.0
         f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
-        recalls.append(recall)
-        f1s.append(f1)
-        per_class[label] = {"support": tp + fn, "precision": precision, "recall": recall, "f1": f1}
+        per_class[label] = {'support': tp + fn, 'precision': precision, 'recall': recall, 'f1': f1}
     return {
-        "n": len(rows),
-        "accuracy": correct / len(rows) if rows else 0.0,
-        "macro_f1": sum(f1s) / len(f1s),
-        "uar": sum(recalls) / len(recalls),
-        "per_class": per_class,
+        'n': n,
+        'accuracy': sum(x['gold'] == x['prediction'] for x in rows) / n if n else 0.0,
+        'macro_f1': sum(v['f1'] for v in per_class.values()) / len(labels),
+        'uar': sum(v['recall'] for v in per_class.values()) / len(labels),
+        'per_class': per_class,
+    }
+
+
+def evaluate(task: str, manifest: Path, predictions: Path, allow_partial: bool = False) -> dict:
+    gold_rows = read_rows(manifest)
+    gold = {row['id']: row for row in gold_rows}
+    if len(gold) != len(gold_rows):
+        raise ValueError('duplicate IDs in manifest')
+    predicted = {}
+    for row in read_rows(predictions):
+        item_id = row.get('id', '').strip()
+        label = (row.get('predicted_label') or row.get('predicted_gender') or '').strip()
+        if row.get('status', 'success') != 'success' or not label:
+            continue
+        if item_id in predicted:
+            raise ValueError(f'duplicate prediction ID: {item_id}')
+        if item_id not in gold:
+            raise ValueError(f'unknown prediction ID: {item_id}')
+        if label not in LABELS[task]:
+            raise ValueError(f'invalid label for {item_id}: {label}')
+        predicted[item_id] = label
+    missing = set(gold) - set(predicted)
+    if missing and not allow_partial:
+        raise ValueError(f'missing {len(missing)} predictions; first IDs: {sorted(missing)[:5]}')
+    if not predicted:
+        raise ValueError('no successful predictions')
+    gold_field = 'gender' if task == 'gender' else 'answer'
+    joined = [{**gold[item_id], 'gold': gold[item_id][gold_field], 'prediction': label}
+              for item_id, label in sorted(predicted.items())]
+    breakdown_keys = ['audio_type', 'language']
+    breakdown_keys += ['data_source', 'length_category', 'scene'] if task == 'gender' else ['category', 'source']
+    breakdowns = {}
+    for field in breakdown_keys:
+        groups = defaultdict(list)
+        for row in joined:
+            groups[row[field]].append(row)
+        breakdowns[field] = {key: classification_metrics(value, LABELS[task])
+                             for key, value in sorted(groups.items())}
+    groups = defaultdict(list)
+    for row in joined:
+        groups[f"{row['audio_type']}:{row['language']}"].append(row)
+    breakdowns['audio_type_language'] = {key: classification_metrics(value, LABELS[task])
+                                         for key, value in sorted(groups.items())}
+    return {
+        'task': task,
+        'complete': not missing,
+        'coverage': len(predicted) / len(gold),
+        'successful': len(predicted),
+        'expected': len(gold),
+        'overall': classification_metrics(joined, LABELS[task]),
+        'breakdowns': breakdowns,
     }
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--predictions", required=True, type=Path)
-    parser.add_argument("--manifest", type=Path, default=Path(__file__).resolve().parents[1] / "benchmark_metadata.csv")
-    parser.add_argument("--output", type=Path)
-    parser.add_argument("--allow-partial", action="store_true")
+    parser = argparse.ArgumentParser(description='Score predictions against a benchmark manifest.')
+    parser.add_argument('--task', choices=tuple(MANIFESTS), default='gender')
+    parser.add_argument('--predictions', type=Path, required=True)
+    parser.add_argument('--manifest', type=Path)
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--allow-partial', action='store_true')
     args = parser.parse_args()
-
-    with args.manifest.open(encoding="utf-8-sig", newline="") as f:
-        gold = {r["id"]: r for r in csv.DictReader(f)}
-    with args.predictions.open(encoding="utf-8-sig", newline="") as f:
-        prediction_rows = list(csv.DictReader(f))
-    predictions = {}
-    for row in prediction_rows:
-        item_id = row.get("id", "").strip()
-        label = row.get("predicted_gender", "").strip().lower()
-        if not item_id or not label:
-            continue
-        if item_id in predictions:
-            raise ValueError(f"Duplicate prediction ID: {item_id}")
-        if item_id not in gold:
-            raise ValueError(f"Unknown prediction ID: {item_id}")
-        if label not in {"male", "female"}:
-            raise ValueError(f"Invalid label for {item_id}: {label}")
-        predictions[item_id] = label
-    missing = sorted(set(gold) - set(predictions))
-    if missing and not args.allow_partial:
-        raise ValueError(f"Missing {len(missing)} predictions; first missing IDs: {missing[:5]}")
-    joined = [{**gold[item_id], "predicted_gender": predictions[item_id]} for item_id in sorted(predictions)]
-    if not joined:
-        raise ValueError("No usable predictions found")
-
-    result: dict[str, object] = {"overall": metrics(joined), "coverage": len(joined) / len(gold), "breakdowns": {}}
-    breakdowns = {
-        "audio_type": lambda r: r["audio_type"],
-        "data_source": lambda r: r["data_source"],
-        "language": lambda r: r["language"],
-        "audio_type_language": lambda r: f"{r['audio_type']}:{r['language']}",
-        "length_category": lambda r: r["length_category"],
-        "scene": lambda r: r["scene"],
-    }
-    for name, key_fn in breakdowns.items():
-        groups: dict[str, list[dict[str, str]]] = defaultdict(list)
-        for row in joined:
-            groups[key_fn(row)].append(row)
-        result["breakdowns"][name] = {key: metrics(value) for key, value in sorted(groups.items())}
-
-    rendered = json.dumps(result, ensure_ascii=False, indent=2)
-    print(rendered)
+    result = evaluate(args.task, args.manifest or MANIFESTS[args.task], args.predictions, args.allow_partial)
+    rendered = json.dumps(result, ensure_ascii=False, indent=2) + '\n'
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(rendered + "\n", encoding="utf-8")
+        args.output.write_text(rendered, encoding='utf-8')
+    print(rendered)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

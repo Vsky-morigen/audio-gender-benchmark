@@ -1,242 +1,179 @@
 #!/usr/bin/env python3
-"""Config-driven inference and evaluation for Audio Gender Benchmark."""
-
+"""One inference runner for the gender and main-language benchmarks."""
 from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import re
-import subprocess
 import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from backends import create_backend
-
+from audio_store import resolve_audio
+from evaluate_gender import MANIFESTS, evaluate, read_rows
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = ROOT / "benchmark_metadata.csv"
-DEFAULT_CONFIG = ROOT / "configs" / "qwen_api.json"
-OUTPUT_FIELDS = [
-    "id", "audio_name", "predicted_gender", "gold_gender", "correct", "backend", "model",
-    "latency_seconds", "raw_response", "status", "error",
-]
+FIELDS = ['id', 'predicted_label', 'gold_label', 'correct', 'backend', 'model',
+          'latency_seconds', 'raw_response', 'status', 'error']
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run model inference and calculate benchmark metrics.")
-    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG, help="JSON experiment configuration.")
-    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
-    parser.add_argument("--output-dir", type=Path, help="Default: results/<run_name>.")
-    parser.add_argument("--workers", type=int, help="Override runner.workers in the config.")
-    parser.add_argument("--limit", type=int, help="Only run the first N items for a smoke test.")
-    parser.add_argument("--overwrite", action="store_true", help="Start again instead of resuming successful rows.")
-    return parser.parse_args()
-
-
-def parse_gender(text: str) -> str:
-    cleaned = text.strip().lower().strip("`*_ .,:;!?\"'")
-    if cleaned in {"male", "female"}:
-        return cleaned
+def parse_label(text: str, task: str) -> str:
+    cleaned = text.strip().strip('`*_ \r\n')
     try:
-        value = json.loads(text)
+        value = json.loads(cleaned)
         if isinstance(value, dict):
-            label = str(value.get("gender") or value.get("prediction") or "").lower()
-            if label in {"male", "female"}:
-                return label
+            value = value.get('answer') or value.get('choice') or value.get('gender') or value.get('prediction')
+            if value is not None:
+                cleaned = str(value).strip()
     except json.JSONDecodeError:
         pass
-    labels = set(re.findall(r"\b(?:male|female)\b", cleaned))
-    if len(labels) == 1:
-        return labels.pop()
-    raise ValueError(f"could not parse one gender label from response: {text!r}")
+    if task == 'gender':
+        label = cleaned.lower().strip('.,:;!?\"\'()[] ')
+        if label in {'male', 'female'}:
+            return label
+    else:
+        match = re.fullmatch(r'(?:答案|answer|choice)?\s*[:：]?\s*[\(（]?([A-Da-dＡ-Ｄａ-ｄ])[\)）]?\s*[.。]?', cleaned, re.I)
+        if match:
+            label = match.group(1).upper()
+            return chr(ord(label) - ord('Ａ') + ord('A')) if 'Ａ' <= label <= 'Ｄ' else label
+    raise ValueError(f'cannot parse one {task} label from response: {text[:160]!r}')
 
 
-def load_json(path: Path) -> dict[str, object]:
-    with path.open(encoding="utf-8") as handle:
-        value = json.load(handle)
-    if not isinstance(value, dict):
-        raise ValueError("config root must be a JSON object")
-    return value
+def safe_audio_path(row: dict[str, str], task: str) -> Path:
+    return resolve_audio(row, task)
 
 
-def load_manifest(path: Path, limit: int | None) -> tuple[list[dict[str, str]], int]:
-    with path.open(encoding="utf-8-sig", newline="") as handle:
-        all_rows = list(csv.DictReader(handle))
-    required = {"id", "audio_name", "audio_path", "gender"}
-    missing = required - set(all_rows[0] if all_rows else {})
-    if missing:
-        raise ValueError(f"manifest is missing columns: {sorted(missing)}")
-    return (all_rows[:limit] if limit is not None else all_rows), len(all_rows)
+def prompt_for(row: dict[str, str], task: str, template: str) -> str:
+    if task == 'gender':
+        return template
+    options = '\n'.join(f'{letter}. {row[f"option_{letter}"]}' for letter in 'ABCD')
+    # The written question and gold answer are deliberately not exposed to the model.
+    return template.replace('{options}', options)
 
 
-def safe_audio_path(row: dict[str, str]) -> Path:
-    path = (ROOT / row["audio_path"]).resolve()
-    try:
-        path.relative_to(ROOT.resolve())
-    except ValueError as exc:
-        raise ValueError(f"audio path escapes benchmark directory: {row['audio_path']}") from exc
-    if not path.is_file():
-        raise FileNotFoundError(path)
-    return path
-
-
-def make_result(
-    row: dict[str, str], backend_name: str, model: str, started: float, prediction: str = "",
-    raw: str = "", status: str = "failed", error: str = "",
-) -> dict[str, str]:
-    return {
-        "id": row["id"],
-        "audio_name": row["audio_name"],
-        "predicted_gender": prediction,
-        "gold_gender": row["gender"],
-        "correct": str(prediction == row["gender"]).lower() if prediction else "",
-        "backend": backend_name,
-        "model": model,
-        "latency_seconds": f"{time.perf_counter() - started:.3f}",
-        "raw_response": raw,
-        "status": status,
-        "error": error,
-    }
-
-
-def infer_one(row, backend, prompt: str, timeout: float, retries: int) -> dict[str, str]:
-    started = time.perf_counter()
-    last_error = ""
-    safe_item = {"id": row["id"], "audio_name": row["audio_name"]}
-    for attempt in range(1, retries + 1):
-        try:
-            raw = backend.predict(safe_audio_path(row), prompt, safe_item, timeout)
-            label = parse_gender(raw)
-            return make_result(row, backend.name, backend.model_id, started, label, raw, "success", "")
-        except Exception as exc:
-            last_error = f"{type(exc).__name__}: {exc}"
-            if attempt < retries:
-                time.sleep(min(2 ** (attempt - 1), 8))
-    return make_result(row, backend.name, backend.model_id, started, error=last_error)
-
-
-def load_completed(path: Path, overwrite: bool, backend_name: str, model: str) -> dict[str, dict[str, str]]:
-    if overwrite or not path.exists():
-        return {}
-    with path.open(encoding="utf-8-sig", newline="") as handle:
-        rows = list(csv.DictReader(handle))
-    return {
-        row["id"]: row for row in rows
-        if row.get("status") == "success"
-        and row.get("predicted_gender")
-        and row.get("backend") == backend_name
-        and row.get("model") == model
-    }
-
-
-def write_results(path: Path, rows: list[dict[str, str]]) -> None:
+def write_csv(path: Path, rows: list[dict[str, str]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_suffix(".tmp")
-    with temp.open("w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=OUTPUT_FIELDS)
+    temp = path.with_suffix('.tmp')
+    with temp.open('w', encoding='utf-8-sig', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=FIELDS)
         writer.writeheader()
-        writer.writerows(sorted(rows, key=lambda row: row["id"]))
+        writer.writerows(sorted(rows, key=lambda x: x['id']))
     temp.replace(path)
 
 
-def score(predictions: Path, manifest: Path, metrics: Path, partial: bool) -> dict[str, object]:
-    command = [
-        sys.executable, str(ROOT / "scripts" / "evaluate_gender.py"),
-        "--predictions", str(predictions), "--manifest", str(manifest), "--output", str(metrics),
-    ]
-    if partial:
-        command.append("--allow-partial")
-    completed = subprocess.run(command, check=True, capture_output=True, text=True)
-    return json.loads(completed.stdout)
+def infer_one(row: dict[str, str], backend, task: str, template: str,
+              timeout: float, retries: int) -> dict[str, str]:
+    start = time.perf_counter()
+    gold = row['gender'] if task == 'gender' else row['answer']
+    result = {'id': row['id'], 'predicted_label': '', 'gold_label': gold, 'correct': '',
+              'backend': backend.name, 'model': backend.model_id, 'latency_seconds': '',
+              'raw_response': '', 'status': 'failed', 'error': ''}
+    allowed_item = {'id': row['id'], 'audio_name': Path(row['audio_path']).name}
+    if task == 'main_language':
+        allowed_item.update({f'option_{letter}': row[f'option_{letter}'] for letter in 'ABCD'})
+    for attempt in range(retries):
+        try:
+            raw = backend.predict(safe_audio_path(row, task), prompt_for(row, task, template), allowed_item, timeout)
+            label = parse_label(raw, task)
+            result.update(predicted_label=label, correct=str(label == gold).lower(),
+                          raw_response=raw, status='success', error='')
+            break
+        except Exception as exc:
+            result['error'] = f'{type(exc).__name__}: {exc}'
+            if attempt + 1 < retries:
+                time.sleep(min(2 ** attempt, 8))
+    result['latency_seconds'] = f'{time.perf_counter() - start:.3f}'
+    return result
 
 
 def main() -> int:
-    args = parse_args()
+    parser = argparse.ArgumentParser(description='Run either speech benchmark with one backend interface.')
+    parser.add_argument('--task', choices=tuple(MANIFESTS), default='gender')
+    parser.add_argument('--config', type=Path, required=True)
+    parser.add_argument('--manifest', type=Path)
+    parser.add_argument('--output-dir', type=Path)
+    parser.add_argument('--workers', type=int)
+    parser.add_argument('--limit', type=int)
+    parser.add_argument('--overwrite', action='store_true')
+    args = parser.parse_args()
     if args.limit is not None and args.limit < 1:
-        raise ValueError("--limit must be positive")
+        parser.error('--limit must be positive')
     config_path = args.config.resolve()
-    config = load_json(config_path)
-    backend_config = config.get("backend")
-    runner_config = config.get("runner", {})
-    task_config = config.get("task", {})
-    if not isinstance(backend_config, dict) or not isinstance(runner_config, dict) or not isinstance(task_config, dict):
-        raise ValueError("config sections backend, runner and task must be JSON objects")
-    prompt = str(task_config.get("prompt", "")).strip()
-    if not prompt:
-        raise ValueError("task.prompt is required")
-    workers = args.workers if args.workers is not None else int(runner_config.get("workers", 1))
-    retries = int(runner_config.get("retries", 1))
-    timeout = float(runner_config.get("timeout_seconds", 120))
-    if workers < 1 or retries < 1 or timeout <= 0:
-        raise ValueError("workers, retries and timeout_seconds must be positive")
-
+    config = json.loads(config_path.read_text(encoding='utf-8'))
+    if config.get('task', {}).get('name', 'gender') != args.task:
+        parser.error('config task.name does not match --task')
+    template = str(config['task']['prompt'])
+    if not template or (args.task == 'main_language' and '{options}' not in template):
+        parser.error('task.prompt must be nonempty and include {options} for main_language')
+    manifest = (args.manifest or MANIFESTS[args.task]).resolve()
+    all_rows = read_rows(manifest)
+    expected = {'id', 'audio_path', 'gender'} if args.task == 'gender' else {
+        'id', 'audio_path', 'answer', 'option_A', 'option_B', 'option_C', 'option_D'}
+    if not all_rows or not expected.issubset(all_rows[0]):
+        parser.error(f'manifest is empty or missing required fields: {sorted(expected)}')
+    if len({r['id'] for r in all_rows}) != len(all_rows):
+        parser.error('duplicate IDs in manifest')
+    rows = all_rows[:args.limit] if args.limit else all_rows
+    runner = config.get('runner', {})
+    workers = args.workers or int(runner.get('workers', 1))
+    retries = int(runner.get('retries', 1))
+    timeout = float(runner.get('timeout_seconds', 120))
+    if min(workers, retries, timeout) <= 0:
+        parser.error('workers, retries and timeout_seconds must be positive')
     try:
-        backend = create_backend(backend_config, ROOT)
+        backend = create_backend(config['backend'], ROOT)
     except Exception as exc:
-        print(f"ERROR: cannot initialize backend: {exc}", file=sys.stderr)
-        return 2
-    run_name = str(config.get("run_name", backend.model_id))
-    output_dir = (args.output_dir or ROOT / "results" / run_name).resolve()
-    manifest_path = args.manifest.resolve()
-    predictions_path = output_dir / "predictions.csv"
-    metrics_path = output_dir / "metrics.json"
-    rows, manifest_total = load_manifest(manifest_path, args.limit)
-    completed = load_completed(predictions_path, args.overwrite, backend.name, backend.model_id)
-    results = [completed[row["id"]] for row in rows if row["id"] in completed]
-    pending = [row for row in rows if row["id"] not in completed]
-
-    print(f"Backend: {backend.name}")
-    print(f"Model: {backend.model_id}")
-    print(f"Items: {len(rows)} total, {len(results)} resumed, {len(pending)} pending")
-    print(f"Output: {output_dir}")
+        parser.error(f'cannot initialize backend: {exc}')
+    run_name = re.sub(r'[^A-Za-z0-9._-]+', '_', str(config.get('run_name') or backend.model_id))
+    default_name = f'{run_name}_smoke_{args.limit}' if args.limit else run_name
+    output_dir = (args.output_dir or ROOT / 'results' / args.task / default_name).resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    predictions_path = output_dir / 'predictions.csv'
+    info_path = output_dir / 'run_info.json'
+    fingerprint = hashlib.sha256(config_path.read_bytes() + manifest.read_bytes()).hexdigest()
+    if predictions_path.exists() and not args.overwrite:
+        if not info_path.exists():
+            parser.error('existing predictions lack run_info.json; use --overwrite or a new output directory')
+        previous = json.loads(info_path.read_text(encoding='utf-8'))
+        if previous.get('fingerprint') != fingerprint:
+            parser.error('config or manifest changed since this run; use --overwrite or a new output directory')
+        completed = {r['id']: r for r in read_rows(predictions_path) if r.get('status') == 'success'}
+    else:
+        completed = {}
+    info = {'task': args.task, 'backend': backend.name, 'model': backend.model_id,
+            'fingerprint': fingerprint, 'config': str(config_path), 'manifest': str(manifest),
+            'expected_items': len(all_rows), 'requested_items': len(rows)}
+    info_path.write_text(json.dumps(info, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    results = [completed[r['id']] for r in rows if r['id'] in completed]
+    pending = [r for r in rows if r['id'] not in completed]
+    print(f'{args.task}: {len(rows)} requested, {len(results)} resumed, {len(pending)} pending')
     lock = threading.Lock()
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(infer_one, row, backend, prompt, timeout, retries): row for row in pending}
+        futures = {pool.submit(infer_one, r, backend, args.task, template, timeout, retries): r for r in pending}
         for future in as_completed(futures):
             result = future.result()
             with lock:
                 results.append(result)
-                write_results(predictions_path, results)
-            print(f"[{len(results):03d}/{len(rows):03d}] {result['id']} -> {result['predicted_gender'] or 'ERROR'}")
-
-    successful = [row for row in results if row["status"] == "success"]
-    failed = [row for row in results if row["status"] != "success"]
-    evaluation = None
+                write_csv(predictions_path, results)
+            print(f"[{len(results):03d}/{len(rows):03d}] {result['id']}: {result['predicted_label'] or 'ERROR'}")
+    if not pending:
+        write_csv(predictions_path, results)
+    successful = sum(r['status'] == 'success' for r in results)
     if successful:
-        evaluation = score(
-            predictions_path, manifest_path, metrics_path,
-            partial=len(successful) != manifest_total,
-        )
-        overall = evaluation["overall"]
-        print(
-            f"Metrics: Accuracy={overall['accuracy']:.4f}, "
-            f"Macro-F1={overall['macro_f1']:.4f}, UAR={overall['uar']:.4f}"
-        )
-    run_info = {
-        "finished_at": datetime.now().astimezone().isoformat(timespec="seconds"),
-        "config": str(config_path),
-        "backend": backend.name,
-        "model": backend.model_id,
-        "requested_items": len(rows),
-        "successful_items": len(successful),
-        "failed_items": len(failed),
-        "predictions_file": str(predictions_path),
-        "metrics_file": str(metrics_path) if evaluation else None,
-    }
-    output_dir.mkdir(parents=True, exist_ok=True)
-    (output_dir / "run_info.json").write_text(
-        json.dumps(run_info, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    if failed:
-        print(f"ERROR: {len(failed)} item(s) failed; rerun the same command to resume.", file=sys.stderr)
-        return 1
-    return 0
+        metrics = evaluate(args.task, manifest, predictions_path, allow_partial=successful < len(all_rows))
+        (output_dir / 'metrics.json').write_text(json.dumps(metrics, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        print(f"Accuracy={metrics['overall']['accuracy']:.4f}; coverage={metrics['coverage']:.1%}")
+    info.update(successful_items=successful, failed_items=len(results) - successful,
+                finished_at=datetime.now(timezone.utc).isoformat())
+    info_path.write_text(json.dumps(info, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    return 0 if successful == len(rows) else 1
 
 
-if __name__ == "__main__":
-    raise SystemExit(main())
+if __name__ == '__main__':
+    sys.exit(main())
