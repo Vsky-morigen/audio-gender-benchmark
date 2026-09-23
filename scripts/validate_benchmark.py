@@ -40,6 +40,14 @@ def main() -> int:
         questions = set()
         for row in rows:
             item = row['id']
+            if task == 'main_language':
+                model = row.get('tts_model', '')
+                allowed = ({'sambert-beth-v1', 'sambert-brian-v1'} if row['language'] == 'en'
+                           else {'sambert-zhiye-v1', 'sambert-zhistella-v1'})
+                if row['audio_type'] == 'TTS' and model not in allowed:
+                    errors.append(f'{item}: TTS model does not match question language')
+                if row['audio_type'] == 'human' and model:
+                    errors.append(f'{item}: human audio must not have a TTS model')
             try:
                 audio = resolve_audio(row, task)
             except (FileNotFoundError, ValueError, OSError, zipfile.BadZipFile) as exc:

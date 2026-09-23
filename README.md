@@ -97,6 +97,6 @@ python scripts/evaluate_gender.py --task main_language --predictions path/to/ans
 ## 来源与使用范围
 
 - 性别任务：TTS 为 Sambert；真人中文来自 MagicData-RAMC，真人英文来自 SLURP 与 AMI Meeting Corpus。
-- 主语言任务：真人中文来自 ODSQA，真人英文来自 SD-QA/VoiceBench；数学文本来自 SVAMP，逻辑与日期文本来自 BIG-Bench Hard，再由 Sambert 合成题干语音。
+- 主语言任务：真人中文来自 ODSQA，真人英文来自 SD-QA/VoiceBench；数学文本来自 SVAMP，逻辑与日期文本来自 BIG-Bench Hard，再由 Sambert 合成题干语音。英文 TTS 使用美式英语音色 `sambert-beth-v1`（女）与 `sambert-brian-v1`（男）；中文 TTS 使用 `sambert-zhistella-v1`（女）与 `sambert-zhiye-v1`（男）。具体模型记录在 `data/main_language.csv` 的 `tts_model` 列。
 
 来源的许可证各不相同。性别真人来源含非商业使用限制；ODSQA 官方仓库未明确标出音频再分发许可。向甲方之外再分发或用于商业场景前，应分别核实原数据与合成服务的使用条款。当前音频已通过自动完整性检查，但尚未逐条人工听辨，正式评测前建议抽听英文发音以及数学和日期题的数字。
